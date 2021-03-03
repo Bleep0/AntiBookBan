@@ -17,13 +17,11 @@ public class AntiBookBan implements Listener {
 
     @EventHandler
     public void onBookEdit(PlayerEditBookEvent e) {
-        Player player = e.getPlayer();
         for (String bookPage : e.getNewBookMeta().getPages()) {
             if (!StandardCharsets.US_ASCII.newEncoder().canEncode(bookPage)) {
                 e.setCancelled(true);
                 String antiBookBan = plugin.getConfig().getString("message");
-                assert antiBookBan != null;
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', antiBookBan));
+                e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', antiBookBan != null ? antiBookBan : "&6Books are limited to ASCII characters"));
             }
         }
     }
